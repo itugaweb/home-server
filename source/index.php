@@ -1,4 +1,48 @@
 <?php
+function getOthers($dir)
+{
+	try
+	{
+		$file = $dir . '/_info.xml';
+		if (!file_exists($file))
+		{
+			throw new Exception('File not found!');
+		}
+
+		$info = simplexml_load_file($file);
+		$contents = '';
+		foreach ($info->add as $add)
+		{
+			$contents .= '<li><a href="' . $add->url . '" target="_blank">' . $add->name . '</a></li>';
+		}
+
+		return $contents;
+	}
+	catch (Exception $e)
+	{
+		return '';
+	}
+}
+
+function getName($dir, $folder)
+{
+	try
+	{
+		$file = $dir . $folder . '/_info.xml';
+		if (!file_exists($file))
+		{
+			throw new Exception('File not found!');
+		}
+
+		$info = simplexml_load_file($file);
+		return $info->name;
+	}
+	catch (Exception $e)
+	{
+		return $folder;
+	}
+}
+
 // Language
 $languages = array(
 	'pt_PT' => array(
@@ -50,15 +94,15 @@ if (isset($_GET['phpinfo']))
 $ignoreList = array('.', '..');
 
 // Get projects
-$projectsContents = '';
 $dirProjects = '000/projects/';
+$projectsContents = getOthers($dirProjects);
 
 $handle = opendir($dirProjects);
-while ($file = readdir($handle))
+while ($folder = readdir($handle))
 {
-	if (is_dir($dirProjects . $file) && !in_array($file, $ignoreList))
+	if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList))
 	{
-		$projectsContents .= '<li><a href="' . $dirProjects . $file . '" target="_blank">' . $file . '</a></li>';
+		$projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
 	}
 }
 closedir($handle);
@@ -74,13 +118,14 @@ else
 
 // Get tests
 $dirTests = '000/tests/';
+$testsContents = getOthers($dirTests);
+
 $handle = opendir($dirTests);
-$testsContents = '';
-while ($file = readdir($handle))
+while ($folder = readdir($handle))
 {
-	if (is_dir($dirTests . $file) && !in_array($file, $ignoreList))
+	if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList))
 	{
-		$testsContents .= '<li><a href="' . $dirTests . $file . '" target="_blank">' . $file . '</a></li>';
+		$testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
 	}
 }
 closedir($handle);
@@ -92,6 +137,20 @@ else
 {
 	$testsContents = '<ul class="projects">' . $testsContents . '</ul>';
 }
+
+// Get tools
+$dirTools = '000/tools/';
+$toolsContents = getOthers($dirTools);
+
+$handle = opendir($dirTools);
+while ($folder = readdir($handle))
+{
+	if (is_dir($dirTools . $folder) && !in_array($folder, $ignoreList))
+	{
+		$toolsContents .= '<li><a href="' . $dirTools . $folder . '" target="_blank">' . getName($dirTools, $folder) . '</a></li>';
+	}
+}
+closedir($handle);
 
 $pageContents = <<< EOPAGE
 <?xml version="1.0" encoding="utf-8"?>
@@ -117,9 +176,7 @@ $pageContents = <<< EOPAGE
 		<td valign="top" style="width:200px;">
 			<h2>{$languages[$ln]['tools']}</h2>
 			<ul class="tools">
-				<li><a href="/index.php?phpinfo=1" target="_blank">phpinfo()</a></li>
-				<li><a href="/phpmyadmin/" target="_blank">PHPMyAdmin</a></li>
-				<li><a href="/webalizer/webalizer.php" target="_blank">WebAlizer</a></li>
+				$toolsContents
 			</ul>
 		</td>
 		<td valign="top" style="width:200px;">
