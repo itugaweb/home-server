@@ -1,24 +1,115 @@
 @charset "utf-8";
 /* CSS Document */
 
-* {margin:0; padding:0;}
-img {border:none;}
-html {background:#DDDDDD;}
-a, a:visited, a:active {color:#A40D15; font-weight:bold; text-decoration:none;}
-a:hover {color:#D90000; font-weight:bold; text-decoration:none;}
-body {font:80%/1.4 tahoma, arial, helvetica, lucida sans, sans-serif; margin:20px;}
-h1 {font-size:18px; color:#CCCCCC;}
-#index {position:absolute; width:800px; border:1px solid #999999; background:#EEEEEE; left:50%; margin:0 0 0 -420px; padding:20px;}
-#head {position:relative; height:110px; border-bottom:1px solid #999999;}
-.lang {position:absolute; right:0px; bottom:0px; font-size:0.85em;}
-.lang li {display:inline;}
-ul.links, ul.projects, ul.tools {list-style:none; line-height:24px;}
-ul.links a, ul.projects a, ul.tools a {padding-left:22px; background:url(../images/folder.png) 0 100% no-repeat;}
-ul.tools a {background:url(../images/tools.png) 0 100% no-repeat;}
-ul.links a {background:url(../images/folderGo.png) 0 100% no-repeat;}
-dl {margin:0; padding:0;}
-dt {font-weight:bold; text-align:right; width:11em; clear:both;}
-dd {margin:-1.35em 0 0 12em; padding-bottom:0.4em; overflow:auto;}
-dd ul li {float:left; display:block; width:16.5%; margin:0; padding:0 0 0 20px; background:url(../images/plugin.png) 2px 50% no-repeat; line-height:1.6;}
-#foot li {list-style:none; display:inline; margin:0; padding:0 0.2em;}
-#foot {text-align:center; margin-top:1.8em; border-top:1px solid #999; padding-top:1em; font-size:0.85em;}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: none;
+}
+
+html {
+    background: #DDDDDD;
+}
+
+a, a:visited, a:active {
+    color: #A40D15;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #D90000;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+body {
+    font: 80%/1.4 tahoma, arial, helvetica, lucida sans, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 18px;
+    color: #CCCCCC;
+}
+
+#index {
+    position: absolute;
+    width: 800px;
+    border: 1px solid #999999;
+    background: #EEEEEE;
+    left: 50%;
+    margin: 0 0 0 -420px;
+    padding: 20px;
+}
+
+#head {
+    position: relative;
+    height: 110px;
+    border-bottom: 1px solid #999999;
+}
+
+.lang {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.85em;
+}
+
+.lang li {
+    display: inline;
+}
+
+ul.links, ul.projects, ul.tools {
+    list-style: none;
+    line-height: 24px;
+}
+
+ul.links a, ul.projects a, ul.tools a {
+    padding-left: 22px;
+    background: url(../images/folder.png) 0 100% no-repeat;
+}
+
+ul.tools a {
+    background: url(../images/tools.png) 0 100% no-repeat;
+}
+
+ul.links a {
+    background: url(../images/folderGo.png) 0 100% no-repeat;
+}
+
+dl {
+    margin: 0;
+    padding: 0;
+}
+
+dt {
+    font-weight: bold;
+    text-align: right;
+    width: 11em;
+    clear: both;
+}
+
+dd {
+    margin: -1.35em 0 0 12em;
+    padding-bottom: 0.4em;
+    overflow: auto;
+}
+
+#foot li {
+    list-style: none;
+    display: inline;
+    margin: 0;
+    padding: 0 0.2em;
+}
+
+#foot {
+    text-align: center;
+    margin-top: 1.8em;
+    border-top: 1px solid #999;
+    padding-top: 1em;
+    font-size: 0.85em;
+}

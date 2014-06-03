@@ -1,93 +1,93 @@
 <?php
 function getOthers($dir)
 {
-	try
-	{
-		$file = $dir . '/_info.xml';
-		if (!file_exists($file))
-		{
-			throw new Exception('File not found!');
-		}
+    try
+    {
+        $file = $dir . '/_info.xml';
+        if (!file_exists($file))
+        {
+            throw new Exception('File not found!');
+        }
 
-		$info = simplexml_load_file($file);
-		$contents = '';
-		foreach ($info->add as $add)
-		{
-			$contents .= '<li><a href="' . $add->url . '" target="_blank">' . $add->name . '</a></li>';
-		}
+        $info = simplexml_load_file($file);
+        $contents = '';
+        foreach ($info->add as $add)
+        {
+            $contents .= '<li><a href="' . $add->url . '" target="_blank">' . $add->name . '</a></li>';
+        }
 
-		return $contents;
-	}
-	catch (Exception $e)
-	{
-		return '';
-	}
+        return $contents;
+    }
+    catch (Exception $e)
+    {
+        return '';
+    }
 }
 
 function getName($dir, $folder)
 {
-	try
-	{
-		$file = $dir . $folder . '/_info.xml';
-		if (!file_exists($file))
-		{
-			throw new Exception('File not found!');
-		}
+    try
+    {
+        $file = $dir . $folder . '/_info.xml';
+        if (!file_exists($file))
+        {
+            throw new Exception('File not found!');
+        }
 
-		$info = simplexml_load_file($file);
-		return $info->name;
-	}
-	catch (Exception $e)
-	{
-		return $folder;
-	}
+        $info = simplexml_load_file($file);
+        return $info->name;
+    }
+    catch (Exception $e)
+    {
+        return $folder;
+    }
 }
 
 // Language
 $languages = array(
-	'pt_PT' => array(
-		'lang' => 'Português',
-		'c1' => 'pt',
-		'pt' => 'Português',
-		'us' => 'Inglês',
-		'title' => 'iTuga Web - Desenvolvimento',
-		'tools' => 'Ferramentas',
-		'projets' => 'Projectos',
-		'noProjets' => 'Nenhum projecto.<br />Para criar um novo, crie a directoria em "000/projects".',
-		'tests' => 'Testes',
-		'noTests' => 'Nenhum teste.<br />Para criar um novo, crie a directoria em "000/tests".'),
-	'en_US' => array(
-		'lang' => 'English',
-		'c1' => 'en',
-		'pt' => 'Portuguesse',
-		'us' => 'English',
-		'title' => 'iTuga Web - Development',
-		'tools' => 'Tools',
-		'projets' => 'Projects',
-		'noProjets' => 'No projects yet.<br />To create a new one, just create a directory in "000/projects".',
-		'tests' => 'Tests',
-		'noTests' => 'No tests yet.<br />To create a new one, just create a directory in "000/tests".'));
+    'pt_PT' => array(
+        'lang' => 'Português',
+        'c1' => 'pt',
+        'pt' => 'Português',
+        'us' => 'Inglês',
+        'title' => 'iTuga Web - Desenvolvimento',
+        'tools' => 'Ferramentas',
+        'projets' => 'Projectos',
+        'noProjets' => 'Nenhum projecto.<br />Para criar um novo, crie a directoria em "000/projects".',
+        'tests' => 'Testes',
+        'noTests' => 'Nenhum teste.<br />Para criar um novo, crie a directoria em "000/tests".'),
+    'en_US' => array(
+        'lang' => 'English',
+        'c1' => 'en',
+        'pt' => 'Portuguesse',
+        'us' => 'English',
+        'title' => 'iTuga Web - Development',
+        'tools' => 'Tools',
+        'projets' => 'Projects',
+        'noProjets' => 'No projects yet.<br />To create a new one, just create a directory in "000/projects".',
+        'tests' => 'Tests',
+        'noTests' => 'No tests yet.<br />To create a new one, just create a directory in "000/tests".'));
 
 // Select lang
 if (isset($_GET['ln']) and $languages[$_GET['ln']])
 {
-	setcookie('iweb-ln', $_GET['ln'], time() + 3600);
-	$ln = $_GET['ln'];
+    setcookie('iweb-ln', $_GET['ln'], time() + 3600);
+    $ln = $_GET['ln'];
 }
 elseif (isset($_COOKIE['iweb-ln']))
 {
-	$ln = $_COOKIE['iweb-ln'];
+    $ln = $_COOKIE['iweb-ln'];
 }
 else
 {
-	$ln = 'pt_PT';
+    $ln = 'pt_PT';
 }
 
 // Show phpinfo
 if (isset($_GET['phpinfo']))
 {
-	phpinfo();
-	exit();
+    phpinfo();
+    exit();
 }
 
 // Dir to ignore
@@ -100,20 +100,20 @@ $projectsContents = getOthers($dirProjects);
 $handle = opendir($dirProjects);
 while ($folder = readdir($handle))
 {
-	if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList))
-	{
-		$projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
-	}
+    if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList))
+    {
+        $projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
+    }
 }
 closedir($handle);
 
 if (!$projectsContents)
 {
-	$projectsContents = '<p>' . $languages[$ln]['noProjets'] . '</p>';
+    $projectsContents = '<p>' . $languages[$ln]['noProjets'] . '</p>';
 }
 else
 {
-	$projectsContents = '<ul class="projects">' . $projectsContents . '</ul>';
+    $projectsContents = '<ul class="projects">' . $projectsContents . '</ul>';
 }
 
 // Get tests
@@ -123,19 +123,19 @@ $testsContents = getOthers($dirTests);
 $handle = opendir($dirTests);
 while ($folder = readdir($handle))
 {
-	if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList))
-	{
-		$testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
-	}
+    if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList))
+    {
+        $testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
+    }
 }
 closedir($handle);
 if (!$testsContents)
 {
-	$testsContents = '<p>' . $languages[$ln]['noTests'] . '</p>';
+    $testsContents = '<p>' . $languages[$ln]['noTests'] . '</p>';
 }
 else
 {
-	$testsContents = '<ul class="projects">' . $testsContents . '</ul>';
+    $testsContents = '<ul class="projects">' . $testsContents . '</ul>';
 }
 
 // Get tools
@@ -145,10 +145,10 @@ $toolsContents = getOthers($dirTools);
 $handle = opendir($dirTools);
 while ($folder = readdir($handle))
 {
-	if (is_dir($dirTools . $folder) && !in_array($folder, $ignoreList))
-	{
-		$toolsContents .= '<li><a href="' . $dirTools . $folder . '" target="_blank">' . getName($dirTools, $folder) . '</a></li>';
-	}
+    if (is_dir($dirTools . $folder) && !in_array($folder, $ignoreList))
+    {
+        $toolsContents .= '<li><a href="' . $dirTools . $folder . '" target="_blank">' . getName($dirTools, $folder) . '</a></li>';
+    }
 }
 closedir($handle);
 
@@ -206,4 +206,3 @@ $pageContents = <<< EOPAGE
 EOPAGE;
 
 echo $pageContents;
-?>

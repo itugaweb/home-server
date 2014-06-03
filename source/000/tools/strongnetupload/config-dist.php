@@ -9,4 +9,3 @@ $ftpDirsStrongNetG4Setup2 = 'E:\Development\Repositories\VB.net\g4-setup\Setup\b
 $ftpDirsStrongNetG4Update = 'E:\Development\Repositories\VB.net\g4-update\G4Update\bin\Release\\';
 $ftpDirsStrongNetG4Update2 = 'E:\Development\Repositories\VB.net\g4-update\Update\bin\Release\\';
 $ftpDirsStrongNetG4Update3 = 'E:\Development\Repositories\VB.net\g4-update\G4Upload\bin\Release\\';
-?>
