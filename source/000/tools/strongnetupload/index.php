@@ -11,7 +11,7 @@
 <?php
 if (isset($_GET['a']) and ((isset($_GET['str']) and $_GET['str'] == 'str') OR (isset($_COOKIE['iweb-str']) AND $_COOKIE['iweb-str'])))
 {
-    setcookie('iweb-str', 'str', time() + 3600);
+    setcookie('iweb-str', 'str', time() + 60*60*24*30);
     include_once 'config.php';
 
     $ftpDirsStrongNetToolsRemote = '/public_html/000/sub/g4/setup/dll/';
