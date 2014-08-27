@@ -69,18 +69,15 @@ $languages = array(
         'noTests' => 'No tests yet.<br />To create a new one, just create a directory in "000/tests".'));
 
 // Select lang
-if (isset($_GET['ln']) and $languages[$_GET['ln']])
+$ln = 'pt_PT';
+if (isset($_GET['l']) and $languages[$_GET['l']])
 {
-    setcookie('iweb-ln', $_GET['ln'], time() + 3600);
-    $ln = $_GET['ln'];
+    setcookie('iweb-ln', $_GET['l'], time() + 3600);
+    $ln = $_GET['l'];
 }
 elseif (isset($_COOKIE['iweb-ln']))
 {
     $ln = $_COOKIE['iweb-ln'];
-}
-else
-{
-    $ln = 'pt_PT';
 }
 
 // Show phpinfo
@@ -94,7 +91,7 @@ if (isset($_GET['phpinfo']))
 $ignoreList = array('.', '..');
 
 // Get projects
-$dirProjects = '000/projects/';
+$dirProjects = 'projects/';
 $projectsContents = getOthers($dirProjects);
 
 $handle = opendir($dirProjects);
@@ -117,7 +114,7 @@ else
 }
 
 // Get tests
-$dirTests = '000/tests/';
+$dirTests = 'tests/';
 $testsContents = getOthers($dirTests);
 
 $handle = opendir($dirTests);
@@ -139,7 +136,7 @@ else
 }
 
 // Get tools
-$dirTools = '000/tools/';
+$dirTools = 'tools/';
 $toolsContents = getOthers($dirTools);
 
 $handle = opendir($dirTools);
@@ -167,8 +164,8 @@ $pageContents = <<< EOPAGE
 	<div id="head">
 		<a href="http://{$_SERVER['SERVER_NAME']}/"><img src="images/logo.png" alt="iTuga Web" /></a>
 		<ul class="lang">
-			<li><a href="?ln=en_US"><img src="images/flags/us.png" alt="gb.png" title="{$languages[$ln]['us']}" width="16" height="16" /></a></li>
-			<li><a href="?ln=pt_PT"><img src="images/flags/pt.png" alt="pt.png" title="{$languages[$ln]['pt']}" width="16" height="16" /></a></li>
+			<li><a href="?l=en_US"><img src="images/flags/us.png" alt="gb.png" title="{$languages[$ln]['us']}" width="16" height="16" /></a></li>
+			<li><a href="?l=pt_PT"><img src="images/flags/pt.png" alt="pt.png" title="{$languages[$ln]['pt']}" width="16" height="16" /></a></li>
 		</ul>
 	</div>
 	<table width="800" border="0">
