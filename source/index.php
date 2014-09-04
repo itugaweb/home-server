@@ -50,6 +50,7 @@ $languages = array(
         'c1' => 'pt',
         'pt' => 'Português',
         'us' => 'Inglês',
+        'company' => 'iTuga Web',
         'title' => 'iTuga Web - Desenvolvimento',
         'tools' => 'Ferramentas',
         'projets' => 'Projectos',
@@ -61,6 +62,7 @@ $languages = array(
         'c1' => 'en',
         'pt' => 'Portuguesse',
         'us' => 'English',
+        'company' => 'iTuga Web',
         'title' => 'iTuga Web - Development',
         'tools' => 'Tools',
         'projets' => 'Projects',
@@ -150,56 +152,83 @@ while ($folder = readdir($handle))
 closedir($handle);
 
 $pageContents = <<< EOPAGE
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$languages[$ln]['c1']}">
+<!DOCTYPE html>
+<html lang="{$languages[$ln]['c1']}">
 <head>
-	<title>{$languages[$ln]['title']}</title>
-	<meta http-equiv="Content-Type" content="txt/html; charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
-	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{$languages[$ln]['title']}</title>
+    <link rel="icon" href="images/favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/template.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-<div id="index">
-	<div id="head">
-		<a href="http://{$_SERVER['SERVER_NAME']}/"><img src="images/logo.png" alt="iTuga Web" /></a>
-		<ul class="lang">
-			<li><a href="?l=en_US"><img src="images/flags/us.png" alt="gb.png" title="{$languages[$ln]['us']}" width="16" height="16" /></a></li>
-			<li><a href="?l=pt_PT"><img src="images/flags/pt.png" alt="pt.png" title="{$languages[$ln]['pt']}" width="16" height="16" /></a></li>
-		</ul>
-	</div>
-	<table width="800" border="0">
-	<tr>
-		<td valign="top" style="width:200px;">
-			<h2>{$languages[$ln]['tools']}</h2>
-			<ul class="tools">
-				$toolsContents
-			</ul>
-		</td>
-		<td valign="top" style="width:200px;">
-			<h2>{$languages[$ln]['projets']}</h2>
-			$projectsContents
-		</td>
-		<td valign="top" style="width:200px;">
-			<h2>{$languages[$ln]['tests']}</h2>
-			$testsContents
-		</td>
-		<td valign="top" style="width:200px;">
-			<h2>Links</h2>
-			<ul class="links">
-				<li><a href="http://www.ituga.net" target="_blank">iTuga Web (net)</a></li>
-				<li><a href="http://www.ituga.pt" target="_blank">iTuga Web (pt)</a></li>
-			</ul>
-		</td>
-	</tr>
-	</table>
-	<ul id="foot">
-		<li><a href="http://www.ituga.net" target="_blank">ituga.net</a></li>
-		<li><a href="http://www.ituga.pt" target="_blank">ituga.pt</a></li>
-	</ul>
+<div class="container">
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="?l=en_US"><img src="images/flags/us.png" alt="gb.png"
+                                        title="{$languages[$ln]['us']}" width="16"
+                                        height="16"/></a></li>
+            <li><a href="?l=pt_PT"><img src="images/flags/pt.png" alt="pt.png"
+                                        title="{$languages[$ln]['pt']}" width="16"
+                                        height="16"/></a></li>
+        </ul>
+        <a href="http://{$_SERVER['SERVER_NAME']}/"><img
+                src="images/logo.png" alt="iTuga Web"/></a>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <h3>{$languages[$ln]['tools']}</h3>
+            <ul class="tools">
+                $toolsContents
+            </ul>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <h3>{$languages[$ln]['projets']}</h3>
+            $projectsContents
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <h3>{$languages[$ln]['tests']}</h3>
+            $testsContents
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <h3>Links</h3>
+            <ul class="links">
+                <li><a href="http://www.ituga.net" target="_blank">iTuga Web
+                    (net)</a></li>
+                <li><a href="http://www.ituga.pt" target="_blank">iTuga Web (pt)</a>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div class="footer">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="http://www.ituga.net" target="_blank">ituga.net</a></li>
+            <li><a href="http://www.ituga.pt" target="_blank">ituga.pt</a></li>
+        </ul>
+        <div class="pull-left">&copy; {$languages[$ln]['company']} 2014
+            <div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
 EOPAGE;
-
 echo $pageContents;

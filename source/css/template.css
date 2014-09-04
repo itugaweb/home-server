@@ -1,0 +1,53 @@
+/* Space out content a bit */
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #DDDDDD;
+}
+.container {
+    background: #FFF;
+    border-radius: 6px;
+    /*padding: 10px;*/
+}
+
+.header, .row, .footer {
+    margin: 10px;
+
+}
+
+.footer ul {
+    margin-top: -10px;
+}
+
+a, a:visited, a:active {
+    color: #A40D15;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #D90000;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+ul.links, ul.projects, ul.tools {
+    list-style: none;
+    padding-left: 0;
+    line-height: 24px;
+}
+
+ul.tools a {
+    padding-left: 22px;
+    background: url(../images/tools.png) 0 100% no-repeat;
+}
+
+ul.projects a {
+    padding-left: 22px;
+    background: url(../images/folder.png) 0 100% no-repeat;
+}
+
+ul.links a {
+    padding-left: 22px;
+    background: url(../images/folderGo.png) 0 100% no-repeat;
+}
