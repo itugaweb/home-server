@@ -1,4 +1,78 @@
 <?php
+function convertCollapse($value)
+{
+    $return = '0';
+    try
+    {
+
+        if ($value <> 1)
+        {
+            $return = '1';
+        }
+
+        return $return;
+    }
+    catch (Exception $e)
+    {
+        return $return;
+    }
+}
+function convertCollapseName($value)
+{
+    $return = '( - )';
+    try
+    {
+
+        if ($value <> 1)
+        {
+            $return = '( + )';
+        }
+
+        return $return;
+    }
+    catch (Exception $e)
+    {
+        return $return;
+    }
+}
+
+function getHide($dir, $folder)
+{
+    try
+    {
+        $file = $dir . $folder . '/_info.xml';
+        if (!file_exists($file))
+        {
+            throw new Exception('File not found!');
+        }
+
+        $info = simplexml_load_file($file);
+        return $info->hide;
+    }
+    catch (Exception $e)
+    {
+        return false;
+    }
+}
+function getName($dir, $folder)
+{
+    try
+    {
+        $file = $dir . $folder . '/_info.xml';
+        if (!file_exists($file))
+        {
+            throw new Exception('File not found!');
+        }
+
+        $info = simplexml_load_file($file);
+        return $info->name;
+    }
+    catch (Exception $e)
+    {
+        return $folder;
+    }
+}
+
 function getOthers($dir)
 {
     try
@@ -21,25 +95,6 @@ function getOthers($dir)
     catch (Exception $e)
     {
         return '';
-    }
-}
-
-function getName($dir, $folder)
-{
-    try
-    {
-        $file = $dir . $folder . '/_info.xml';
-        if (!file_exists($file))
-        {
-            throw new Exception('File not found!');
-        }
-
-        $info = simplexml_load_file($file);
-        return $info->name;
-    }
-    catch (Exception $e)
-    {
-        return $folder;
     }
 }
 
@@ -82,6 +137,35 @@ elseif (isset($_COOKIE['iweb-ln']))
     $ln = $_COOKIE['iweb-ln'];
 }
 
+// All projects
+$allP = 0;
+if (isset($_GET['allprojects']))
+{
+    setcookie('iweb-allprojects', $_GET['allprojects'], time() + 3600);
+    $allP = $_GET['allprojects'];
+}
+elseif (isset($_COOKIE['iweb-allprojects']))
+{
+    $allP = $_COOKIE['iweb-allprojects'];
+}
+
+    $allPColapse = '<small><a href="?allprojects=' . convertCollapse($allP) . '">' . convertCollapseName($allP) . '</a></small>';
+
+
+// All tests
+$allT = false;
+if (isset($_GET['alltests']))
+{
+    setcookie('iweb-alltests', $_GET['alltests'], time() + 3600);
+    $allT = $_GET['alltests'];
+}
+elseif (isset($_COOKIE['iweb-alltests']))
+{
+    $allT = $_COOKIE['iweb-alltests'];
+}
+
+$allTColapse = '<small><a href="?alltests=' . convertCollapse($allT) . '">' . convertCollapseName($allT) . '</a></small>';
+
 // Show phpinfo
 if (isset($_GET['phpinfo']))
 {
@@ -101,7 +185,10 @@ while ($folder = readdir($handle))
 {
     if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList))
     {
-        $projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
+        if ($allP == true OR getHide($dirProjects, $folder) == false)
+        {
+            $projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
+        }
     }
 }
 closedir($handle);
@@ -124,7 +211,10 @@ while ($folder = readdir($handle))
 {
     if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList))
     {
-        $testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
+        if ($allT == true OR getHide($dirTests, $folder) == false)
+        {
+            $testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
+        }
     }
 }
 closedir($handle);
@@ -198,11 +288,11 @@ $pageContents = <<< EOPAGE
             </ul>
         </div>
         <div class="col-sm-6 col-md-3">
-            <h3>{$languages[$ln]['projets']}</h3>
+            <h3>{$languages[$ln]['projets']} {$allPColapse}</h3>
             $projectsContents
         </div>
         <div class="col-sm-6 col-md-3">
-            <h3>{$languages[$ln]['tests']}</h3>
+            <h3>{$languages[$ln]['tests']} {$allTColapse}</h3>
             $testsContents
         </div>
         <div class="col-sm-6 col-md-3">
