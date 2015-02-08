@@ -9,7 +9,7 @@
         <url>/phpmyadmin/</url>
     </add>
     <add>
-        <name>WebAlizer</name>
-        <url>/webalizer/webalizer.php</url>
+        <name>WebLog</name>
+        <url>/weblog/</url>
     </add>
 </info>

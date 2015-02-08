@@ -2,101 +2,87 @@
 function convertCollapse($value)
 {
     $return = '0';
-    try
-    {
+    try {
 
-        if ($value <> 1)
-        {
+        if ($value <> 1) {
             $return = '1';
         }
 
         return $return;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
         return $return;
     }
 }
+
 function convertCollapseName($value)
 {
     $return = '( - )';
-    try
-    {
+    try {
 
-        if ($value <> 1)
-        {
+        if ($value <> 1) {
             $return = '( + )';
         }
 
         return $return;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
         return $return;
     }
 }
 
 function getHide($dir, $folder)
 {
-    try
-    {
+    try {
         $file = $dir . $folder . '/_info.xml';
-        if (!file_exists($file))
-        {
+        if (!file_exists($file)) {
             throw new Exception('File not found!');
         }
 
         $info = simplexml_load_file($file);
         return $info->hide;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
         return false;
     }
 }
+
 function getName($dir, $folder)
 {
-    try
-    {
+    try {
         $file = $dir . $folder . '/_info.xml';
-        if (!file_exists($file))
-        {
+        if (!file_exists($file)) {
             throw new Exception('File not found!');
         }
 
         $info = simplexml_load_file($file);
         return $info->name;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
         return $folder;
     }
 }
 
-function getOthers($dir)
+function getOthers($dir, $force = false)
 {
-    try
-    {
+    try {
         $file = $dir . '/_info.xml';
-        if (!file_exists($file))
-        {
+        if (!file_exists($file)) {
             throw new Exception('File not found!');
         }
 
         $info = simplexml_load_file($file);
         $contents = '';
-        foreach ($info->add as $add)
-        {
-            $contents .= '<li><a href="' . $add->url . '" target="_blank">' . $add->name . '</a></li>';
+        foreach ($info->add as $add) {
+            if ($force == true OR $add->hide == false) {
+                $contents .= '<li><a href="' . $add->url . '" target="_blank">' . $add->name . '</a></li>';
+            }
         }
 
         return $contents;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
         return '';
     }
 }
+
+// Year
+$year = date('Y');
 
 // Language
 $languages = array(
@@ -127,48 +113,38 @@ $languages = array(
 
 // Select lang
 $ln = 'pt_PT';
-if (isset($_GET['l']) and $languages[$_GET['l']])
-{
+if (isset($_GET['l']) and $languages[$_GET['l']]) {
     setcookie('iweb-ln', $_GET['l'], time() + 3600);
     $ln = $_GET['l'];
-}
-elseif (isset($_COOKIE['iweb-ln']))
-{
+} elseif (isset($_COOKIE['iweb-ln'])) {
     $ln = $_COOKIE['iweb-ln'];
 }
 
 // All projects
 $allP = 0;
-if (isset($_GET['allprojects']))
-{
+if (isset($_GET['allprojects'])) {
     setcookie('iweb-allprojects', $_GET['allprojects'], time() + 3600);
     $allP = $_GET['allprojects'];
-}
-elseif (isset($_COOKIE['iweb-allprojects']))
-{
+} elseif (isset($_COOKIE['iweb-allprojects'])) {
     $allP = $_COOKIE['iweb-allprojects'];
 }
 
-    $allPColapse = '<small><a href="?allprojects=' . convertCollapse($allP) . '">' . convertCollapseName($allP) . '</a></small>';
+$allPColapse = '<small><a href="?allprojects=' . convertCollapse($allP) . '">' . convertCollapseName($allP) . '</a></small>';
 
 
 // All tests
 $allT = false;
-if (isset($_GET['alltests']))
-{
+if (isset($_GET['alltests'])) {
     setcookie('iweb-alltests', $_GET['alltests'], time() + 3600);
     $allT = $_GET['alltests'];
-}
-elseif (isset($_COOKIE['iweb-alltests']))
-{
+} elseif (isset($_COOKIE['iweb-alltests'])) {
     $allT = $_COOKIE['iweb-alltests'];
 }
 
 $allTColapse = '<small><a href="?alltests=' . convertCollapse($allT) . '">' . convertCollapseName($allT) . '</a></small>';
 
 // Show phpinfo
-if (isset($_GET['phpinfo']))
-{
+if (isset($_GET['phpinfo'])) {
     phpinfo();
     exit();
 }
@@ -178,52 +154,40 @@ $ignoreList = array('.', '..');
 
 // Get projects
 $dirProjects = 'projects/';
-$projectsContents = getOthers($dirProjects);
+$projectsContents = getOthers($dirProjects, $allP);
 
 $handle = opendir($dirProjects);
-while ($folder = readdir($handle))
-{
-    if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList))
-    {
-        if ($allP == true OR getHide($dirProjects, $folder) == false)
-        {
+while ($folder = readdir($handle)) {
+    if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList)) {
+        if ($allP == true OR getHide($dirProjects, $folder) == false) {
             $projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
         }
     }
 }
 closedir($handle);
 
-if (!$projectsContents)
-{
+if (!$projectsContents) {
     $projectsContents = '<p>' . $languages[$ln]['noProjets'] . '</p>';
-}
-else
-{
+} else {
     $projectsContents = '<ul class="projects">' . $projectsContents . '</ul>';
 }
 
 // Get tests
 $dirTests = 'tests/';
-$testsContents = getOthers($dirTests);
+$testsContents = getOthers($dirTests, $allT);
 
 $handle = opendir($dirTests);
-while ($folder = readdir($handle))
-{
-    if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList))
-    {
-        if ($allT == true OR getHide($dirTests, $folder) == false)
-        {
+while ($folder = readdir($handle)) {
+    if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList)) {
+        if ($allT == true OR getHide($dirTests, $folder) == false) {
             $testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
         }
     }
 }
 closedir($handle);
-if (!$testsContents)
-{
+if (!$testsContents) {
     $testsContents = '<p>' . $languages[$ln]['noTests'] . '</p>';
-}
-else
-{
+} else {
     $testsContents = '<ul class="projects">' . $testsContents . '</ul>';
 }
 
@@ -232,10 +196,8 @@ $dirTools = 'tools/';
 $toolsContents = getOthers($dirTools);
 
 $handle = opendir($dirTools);
-while ($folder = readdir($handle))
-{
-    if (is_dir($dirTools . $folder) && !in_array($folder, $ignoreList))
-    {
+while ($folder = readdir($handle)) {
+    if (is_dir($dirTools . $folder) && !in_array($folder, $ignoreList)) {
         $toolsContents .= '<li><a href="' . $dirTools . $folder . '" target="_blank">' . getName($dirTools, $folder) . '</a></li>';
     }
 }
@@ -300,7 +262,6 @@ $pageContents = <<< EOPAGE
             <ul class="links">
                 <li><a href="http://www.ituga.net" target="_blank">iTuga Web
                     (net)</a></li>
-                <li><a href="http://www.ituga.pt" target="_blank">iTuga Web (pt)</a>
                 </li>
             </ul>
         </div>
@@ -310,9 +271,8 @@ $pageContents = <<< EOPAGE
     <div class="footer">
         <ul class="nav nav-pills pull-right">
             <li><a href="http://www.ituga.net" target="_blank">ituga.net</a></li>
-            <li><a href="http://www.ituga.pt" target="_blank">ituga.pt</a></li>
         </ul>
-        <div class="pull-left">&copy; {$languages[$ln]['company']} 2014
+        <div class="pull-left">&copy; {$languages[$ln]['company']} {$year}
             <div>
             </div>
         </div>
