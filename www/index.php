@@ -260,8 +260,7 @@ $pageContents = <<< EOPAGE
         <div class="col-sm-6 col-md-3">
             <h3>Links</h3>
             <ul class="links">
-                <li><a href="http://www.ituga.net" target="_blank">iTuga Web
-                    (net)</a></li>
+                <li><a href="http://www.ituga.net" target="_blank">iTuga Web</a></li>
                 </li>
             </ul>
         </div>
