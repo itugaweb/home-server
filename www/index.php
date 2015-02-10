@@ -95,9 +95,9 @@ $languages = array(
         'title' => 'iTuga Web - Desenvolvimento',
         'tools' => 'Ferramentas',
         'projets' => 'Projectos',
-        'noProjets' => 'Nenhum projecto.<br />Para criar um novo, crie a directoria em "000/projects".',
+        'noProjets' => 'Nenhum projecto.<br />Para criar um novo, crie a directoria em "projects".',
         'tests' => 'Testes',
-        'noTests' => 'Nenhum teste.<br />Para criar um novo, crie a directoria em "000/tests".'),
+        'noTests' => 'Nenhum teste.<br />Para criar um novo, crie a directoria em "tests".'),
     'en_US' => array(
         'lang' => 'English',
         'c1' => 'en',
@@ -107,9 +107,9 @@ $languages = array(
         'title' => 'iTuga Web - Development',
         'tools' => 'Tools',
         'projets' => 'Projects',
-        'noProjets' => 'No projects yet.<br />To create a new one, just create a directory in "000/projects".',
+        'noProjets' => 'No projects yet.<br />To create a new one, just create a directory in "projects".',
         'tests' => 'Tests',
-        'noTests' => 'No tests yet.<br />To create a new one, just create a directory in "000/tests".'));
+        'noTests' => 'No tests yet.<br />To create a new one, just create a directory in "tests".'));
 
 // Select lang
 $ln = 'pt_PT';
