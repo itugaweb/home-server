@@ -9,7 +9,7 @@
         <url>/phpmyadmin/</url>
     </add>
     <add>
-        <name>WebLog</name>
-        <url>/weblog/</url>
+        <name>Ampps</name>
+        <url>/ampps/</url>
     </add>
 </info>
