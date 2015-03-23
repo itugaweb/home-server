@@ -38,7 +38,7 @@ function getHide($dir, $folder)
         }
 
         $info = simplexml_load_file($file);
-        return $info->hide;
+	    return strtoupper(trim($info->hide)) == "TRUE" ? true : false;
     } catch (Exception $e) {
         return false;
     }
