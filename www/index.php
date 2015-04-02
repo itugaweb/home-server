@@ -38,7 +38,7 @@ function getHide($dir, $folder)
         }
 
         $info = simplexml_load_file($file);
-	    return strtoupper(trim($info->hide)) == "TRUE" ? true : false;
+        return strtoupper(trim($info->hide)) == "TRUE" ? true : false;
     } catch (Exception $e) {
         return false;
     }
@@ -62,7 +62,7 @@ function getName($dir, $folder)
 function getOthers($dir, $force = false)
 {
     try {
-        $file = $dir . '/_info.xml';
+        $file = $dir . '_info.xml';
         if (!file_exists($file)) {
             throw new Exception('File not found!');
         }
@@ -70,7 +70,7 @@ function getOthers($dir, $force = false)
         $info = simplexml_load_file($file);
         $contents = '';
         foreach ($info->add as $add) {
-            if ($force == true OR $add->hide == false) {
+            if ($force OR !$add->hide) {
                 $contents .= '<li><a href="' . $add->url . '" target="_blank">' . $add->name . '</a></li>';
             }
         }
@@ -79,6 +79,12 @@ function getOthers($dir, $force = false)
     } catch (Exception $e) {
         return '';
     }
+}
+
+// Show phpinfo
+if (isset($_GET['phpinfo'])) {
+    phpinfo();
+    exit();
 }
 
 // Year
@@ -113,7 +119,7 @@ $languages = array(
 
 // Select lang
 $ln = 'pt_PT';
-if (isset($_GET['l']) and $languages[$_GET['l']]) {
+if (isset($_GET['l']) && $languages[$_GET['l']]) {
     setcookie('iweb-ln', $_GET['l'], time() + 3600);
     $ln = $_GET['l'];
 } elseif (isset($_COOKIE['iweb-ln'])) {
@@ -121,7 +127,7 @@ if (isset($_GET['l']) and $languages[$_GET['l']]) {
 }
 
 // All projects
-$allP = 0;
+$allP = false;
 if (isset($_GET['allprojects'])) {
     setcookie('iweb-allprojects', $_GET['allprojects'], time() + 3600);
     $allP = $_GET['allprojects'];
@@ -130,7 +136,6 @@ if (isset($_GET['allprojects'])) {
 }
 
 $allPColapse = '<small><a href="?allprojects=' . convertCollapse($allP) . '">' . convertCollapseName($allP) . '</a></small>';
-
 
 // All tests
 $allT = false;
@@ -143,12 +148,6 @@ if (isset($_GET['alltests'])) {
 
 $allTColapse = '<small><a href="?alltests=' . convertCollapse($allT) . '">' . convertCollapseName($allT) . '</a></small>';
 
-// Show phpinfo
-if (isset($_GET['phpinfo'])) {
-    phpinfo();
-    exit();
-}
-
 // Dir to ignore
 $ignoreList = array('.', '..');
 
@@ -158,8 +157,8 @@ $projectsContents = getOthers($dirProjects, $allP);
 
 $handle = opendir($dirProjects);
 while ($folder = readdir($handle)) {
-    if (is_dir($dirProjects . $folder) && !in_array($folder, $ignoreList)) {
-        if ($allP == true OR getHide($dirProjects, $folder) == false) {
+    if (!in_array($folder, $ignoreList) && is_dir($dirProjects . $folder)) {
+        if ($allP OR !getHide($dirProjects, $folder)) {
             $projectsContents .= '<li><a href="' . $dirProjects . $folder . '" target="_blank">' . getName($dirProjects, $folder) . '</a></li>';
         }
     }
@@ -178,7 +177,7 @@ $testsContents = getOthers($dirTests, $allT);
 
 $handle = opendir($dirTests);
 while ($folder = readdir($handle)) {
-    if (is_dir($dirTests . $folder) && !in_array($folder, $ignoreList)) {
+    if (!in_array($folder, $ignoreList) && is_dir($dirTests . $folder)) {
         if ($allT == true OR getHide($dirTests, $folder) == false) {
             $testsContents .= '<li><a href="' . $dirTests . $folder . '" target="_blank">' . getName($dirTests, $folder) . '</a></li>';
         }
@@ -197,7 +196,7 @@ $toolsContents = getOthers($dirTools);
 
 $handle = opendir($dirTools);
 while ($folder = readdir($handle)) {
-    if (is_dir($dirTools . $folder) && !in_array($folder, $ignoreList)) {
+    if (!in_array($folder, $ignoreList) && is_dir($dirTools . $folder)) {
         $toolsContents .= '<li><a href="' . $dirTools . $folder . '" target="_blank">' . getName($dirTools, $folder) . '</a></li>';
     }
 }
@@ -214,10 +213,14 @@ $pageContents = <<< EOPAGE
     <meta name="author" content="">
 
     <title>{$languages[$ln]['title']}</title>
-    <link rel="icon" href="images/favicon.ico">
+    <link rel="icon" href="favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap's core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
     <!-- Custom styles for this template -->
     <link href="css/template.css" rel="stylesheet">
 
@@ -228,56 +231,60 @@ $pageContents = <<< EOPAGE
     <![endif]-->
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <ul class="nav nav-pills pull-right">
-            <li><a href="?l=en_US"><img src="images/flags/us.png" alt="gb.png"
-                                        title="{$languages[$ln]['us']}" width="16"
-                                        height="16"/></a></li>
-            <li><a href="?l=pt_PT"><img src="images/flags/pt.png" alt="pt.png"
-                                        title="{$languages[$ln]['pt']}" width="16"
-                                        height="16"/></a></li>
-        </ul>
-        <a href="http://{$_SERVER['SERVER_NAME']}/"><img
-                src="images/logo.png" alt="iTuga Web"/></a>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-6 col-md-3">
-            <h3>{$languages[$ln]['tools']}</h3>
-            <ul class="tools">
-                $toolsContents
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="?l=en_US"><img src="images/flags/us.png" alt="gb.png"
+                                            title="{$languages[$ln]['us']}" width="16"
+                                            height="16"/></a></li>
+                <li><a href="?l=pt_PT"><img src="images/flags/pt.png" alt="pt.png"
+                                            title="{$languages[$ln]['pt']}" width="16"
+                                            height="16"/></a></li>
             </ul>
+            <a href="http://{$_SERVER['SERVER_NAME']}/"><img
+                    src="images/logo.png" alt="iTuga Web"/></a>
         </div>
-        <div class="col-sm-6 col-md-3">
-            <h3>{$languages[$ln]['projets']} {$allPColapse}</h3>
-            $projectsContents
+        <hr/>
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <h3>{$languages[$ln]['tools']}</h3>
+                <ul class="tools">
+                    $toolsContents
+                </ul>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <h3>{$languages[$ln]['projets']} {$allPColapse}</h3>
+                $projectsContents
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <h3>{$languages[$ln]['tests']} {$allTColapse}</h3>
+                $testsContents
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <h3>Links</h3>
+                <ul class="links">
+                    <li><a href="http://www.ituga.net" target="_blank">iTuga Web</a></li>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="col-sm-6 col-md-3">
-            <h3>{$languages[$ln]['tests']} {$allTColapse}</h3>
-            $testsContents
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <h3>Links</h3>
-            <ul class="links">
-                <li><a href="http://www.ituga.net" target="_blank">iTuga Web</a></li>
-                </li>
+        <hr/>
+        <div class="footer">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="http://www.ituga.net" target="_blank">ituga.net</a></li>
             </ul>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <hr/>
-    <div class="footer">
-        <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.ituga.net" target="_blank">ituga.net</a></li>
-        </ul>
-        <div class="pull-left">&copy; {$languages[$ln]['company']} {$year}
-            <div>
+            <div class="pull-left">&copy; {$languages[$ln]['company']} {$year}
+                <div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</body>
+    <!-- jQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Bootstrap's core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </body>
 </html>
 EOPAGE;
 echo $pageContents;
