@@ -264,7 +264,6 @@ $pageContents = <<< EOPAGE
                 <h3>Links</h3>
                 <ul class="links">
                     <li><a href="http://www.ituga.net" target="_blank">iTuga Web</a></li>
-                    </li>
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -274,10 +273,7 @@ $pageContents = <<< EOPAGE
             <ul class="nav nav-pills pull-right">
                 <li><a href="http://www.ituga.net" target="_blank">ituga.net</a></li>
             </ul>
-            <div class="pull-left">&copy; {$languages[$ln]['company']} {$year}
-                <div>
-                </div>
-            </div>
+            <div class="pull-left">&copy; {$languages[$ln]['company']} {$year}</div>
         </div>
     </div>
     <!-- jQuery  -->
