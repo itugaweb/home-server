@@ -8,8 +8,4 @@
         <name>PHPMyAdmin</name>
         <url>/phpmyadmin/</url>
     </add>
-    <add>
-        <name>Ampps</name>
-        <url>/ampps/</url>
-    </add>
 </info>

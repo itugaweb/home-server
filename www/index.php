@@ -100,6 +100,7 @@ $languages = array(
         'company' => 'iTuga Web',
         'title' => 'iTuga Web - Desenvolvimento',
         'tools' => 'Ferramentas',
+        'links' => 'Links',
         'projets' => 'Projectos',
         'noProjets' => 'Nenhum projecto.<br />Para criar um novo, crie a directoria em "projects".',
         'tests' => 'Testes',
@@ -112,6 +113,7 @@ $languages = array(
         'company' => 'iTuga Web',
         'title' => 'iTuga Web - Development',
         'tools' => 'Tools',
+        'links' => 'Links',
         'projets' => 'Projects',
         'noProjets' => 'No projects yet.<br />To create a new one, just create a directory in "projects".',
         'tests' => 'Tests',
@@ -202,6 +204,20 @@ while ($folder = readdir($handle)) {
 }
 closedir($handle);
 
+// Get links
+$dirLinks = 'links/';
+$linksContents = getOthers($dirLinks);
+
+$handle = opendir($dirLinks);
+while ($folder = readdir($handle)) {
+    if (!in_array($folder, $ignoreList) && is_dir($dirLinks . $folder)) {
+        $linksContents .= '<li><a href="' . $dirTools . $dirLinks . '" target="_blank">' . getName($dirLinks, $folder) . '</a></li>';
+    }
+}
+closedir($handle);
+
+$linksContents = '<ul class="links">' . $linksContents . '</ul>';
+
 $pageContents = <<< EOPAGE
 <!DOCTYPE html>
 <html lang="{$languages[$ln]['c1']}">
@@ -261,10 +277,8 @@ $pageContents = <<< EOPAGE
                 $testsContents
             </div>
             <div class="col-sm-6 col-md-3">
-                <h3>Links</h3>
-                <ul class="links">
-                    <li><a href="http://www.ituga.net" target="_blank">iTuga Web</a></li>
-                </ul>
+                <h3>{$languages[$ln]['links']}</h3>
+                $linksContents
             </div>
             <div class="clearfix"></div>
         </div>
