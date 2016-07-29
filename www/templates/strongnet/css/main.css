@@ -1,0 +1,15 @@
+/* Common */
+html{background:#DDD}
+
+a,a:active,a:visited{color:#A40D15;text-decoration:none}
+
+a:hover{color:#D90000;text-decoration:none}
+
+/* Nav */
+.footer .uk-list.links li,.header .uk-list.lang li{display:inline-block}
+
+/* Layout */
+.uk-container{background:#FFF;padding-top:10px}
+
+.content{padding-top:10px;padding-bottom:10px}
+
