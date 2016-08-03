@@ -12,5 +12,6 @@ $c['dirs']['template'] = 'templates/%s/';
 $c['dirs']['templates'] = 'templates/';
 $c['dirs']['twigTemp'] = sprintf('%stwig/', $c['dirs']['temp']);
 $c['dirs']['twigCache'] = sprintf('%scache/', $c['dirs']['twigTemp']);
+$c['languagegDefault'] = 'pt-PT';
 $c['template'] = 'templatename';
 $c['year'] = date('Y');

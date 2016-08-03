@@ -66,8 +66,9 @@ function GetContent(&$c, $n)
     return $c;
 }
 
-function GetLang(&$c, $l = 'pt-PT')
+function GetLang(&$c, $l = '')
 {
+    if (empty($l)) $l = $c['languagegDefault'];
     if (isset($_GET['l']) && file_exists($c['dirs']['language'] . $_GET['l'] . '.php')) {
         setcookie('iweb-l', $_GET['l'], time() + 3600);
         $l = $_GET['l'];
