@@ -1,7 +1,7 @@
 <?php
 $c['company'] = 'CompanyName';
 $c['companyLink'] = 'http://www.google.pt';
-$c['debug'] = true;
+$c['debug'] = false;
 $c['dirs']['composer'] = 'vendor/';
 $c['dirs']['images'] = 'images/';
 $c['dirs']['includes'] = 'includes/';
