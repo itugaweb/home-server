@@ -1,8 +1,8 @@
 <?php
 $c['company'] = 'CompanyName';
-$c['companyLink'] = 'http://www.google.pt';
+$c['companyLink'] = 'http://www.company.com';
 $c['debug'] = false;
-$c['dirs']['composer'] = 'vendor/';
+$c['dirs']['composer'] = 'libraries/composer/';
 $c['dirs']['images'] = 'images/';
 $c['dirs']['includes'] = 'includes/';
 $c['dirs']['language'] = 'language/';

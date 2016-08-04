@@ -3,6 +3,6 @@ www/_projects/*
 www/_tests/*
 www/_tools/*
 www/tmp/*
-www/vendor/*
+www/libraries/composer/*
 www/composer.lock
 www/config.php

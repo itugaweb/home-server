@@ -1,5 +1,8 @@
 {
-    "require": {
-        "twig/twig": "~1.0"
-    }
+  "config": {
+    "vendor-dir": "libraries/composer"
+  },
+  "require": {
+    "twig/twig": "~1.0"
+  }
 }

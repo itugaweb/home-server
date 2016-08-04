@@ -1,13 +1,10 @@
 <?xml version='1.0' standalone='yes'?>
 <info>
     <name>Name</name>
+    <link>https://www.google.pt</link>
     <hide>1</hide>
     <add>
         <name>Name</name>
-        <url>Url</url>
-    </add>
-    <add>
-        <name>Name</name>
-        <url>Url</url>
+        <link>http://www.example.com</link>
     </add>
 </info>

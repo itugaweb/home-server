@@ -49,7 +49,7 @@ function GetContent(&$c, $n)
             $info = simplexml_load_file($file);
             foreach ($info->add as $add) {
                 if ($c[$n]['all'] OR !$add->hide) {
-                    $c[$n]['content'] .= '<li><a href="' . $add->url . '" target="_blank"> ' . $icon . $add->name . '</a></li>';
+                    $c[$n]['content'] .= '<li><a href="' . $add->link . '" target="_blank"> ' . $icon . $add->name . '</a></li>';
                 }
             }
         }
@@ -97,8 +97,12 @@ function getNameHide(&$c, $n, $d, $f, $icon)
             $target .= ' target="_blank"';
         }
 
+        $olink = '';
+        if (!empty($info->link)) {
+            $olink = ' <a href="' . $info->link . '" target="_blank"><i class="uk-icon-external-link"></i></a>';
+        }
         if ($c[$n]['all'] OR !$t) {
-            $c[$n]['content'] .= '<li><a href="/' . $dir . $target . ' >' . $icon . $f . '</a></li> ';
+            $c[$n]['content'] .= '<li><a href="/' . $dir . $target . ' >' . $icon . $f . '</a>' . $olink . '</li> ';
         }
     }
 
