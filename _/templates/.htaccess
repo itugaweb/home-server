@@ -2,10 +2,3 @@
 # Desabilitar o rediecionamento de url
 #
 #RewriteEngine Off
-
-#
-# Alterar a versao do PHP por pasta
-#
-#<Files ~ "\.php$">
-#	FcgidWrapper "C:/PHP/5.4/php-cgi.exe" .php
-#</Files>

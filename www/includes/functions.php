@@ -14,13 +14,13 @@ function GetContent(&$c, $n)
 
     // Html Collapse
     $cv = '0';
-    $cn = '( - )';
+    $cn = '(-)';
     if ($c[$n]['all'] <> 1) {
         $cv = '1';
-        $cn = '( + )';
+        $cn = '(+)';
     }
 
-    $c[$n]['collapse'] = '<a class="uk-text-small" href="?' . $n . '=' . $cv . '">' . $cn . '</a>';
+    $c[$n]['collapse'] = '<a class="small" href="?' . $n . '=' . $cv . '">' . $cn . '</a>';
 
     $c[$n]['content'] = '';
 
@@ -30,13 +30,13 @@ function GetContent(&$c, $n)
 
     $icon = '';
     if ($n == 'tools') {
-        $icon = '<i class="uk-icon-wrench"></i> ';
+        $icon = '<i class="fas fa-wrench"></i> ';
     } elseif ($n == 'projects') {
-        $icon = '<i class="uk-icon-star"></i> ';
+        $icon = '<i class="fas fa-star"></i> ';
     } elseif ($n == 'tests') {
-        $icon = '<i class="uk-icon-warning"></i> ';
+        $icon = '<i class="fas fa-exclamation-triangle"></i> ';
     } elseif ($n == 'links') {
-        $icon = '<i class="uk-icon-link"></i> ';
+        $icon = '<i class="fas fa-link"></i> ';
     }
 
     foreach ($a as $v) {
@@ -49,11 +49,10 @@ function GetContent(&$c, $n)
             $info = simplexml_load_file($file);
             foreach ($info->add as $add) {
                 if ($c[$n]['all'] OR !$add->hide) {
-                    $c[$n]['content'] .= '<li><a href="' . $add->link . '" target="_blank"> ' . $icon . $add->name . '</a></li>';
+                    $c[$n]['content'] .= '<li class="list-group-item"><a href="' . $add->link . '" target="_blank">' . $icon . $add->name . '</a></li>';
                 }
             }
         }
-
     }
 
     if (is_dir($dir)) {
@@ -90,8 +89,9 @@ function getNameHide(&$c, $n, $d, $f, $icon)
         if (file_exists($file)) {
             $info = simplexml_load_file($file);
             $f = $info->name;
-            $t = strtoupper(trim($info->hide)) == "TRUE" ? true : false;
+            $t = (strtoupper(trim($info->hide)) == "TRUE" || trim($info->hide) == "1") ? true : false;
         }
+
         $target = '"';
         if (file_exists($dir . 'index.php') || file_exists($dir . 'index.html')) {
             $target .= ' target="_blank"';
@@ -99,13 +99,12 @@ function getNameHide(&$c, $n, $d, $f, $icon)
 
         $olink = '';
         if (!empty($info->link)) {
-            $olink = ' <a href="' . $info->link . '" target="_blank"><i class="uk-icon-external-link"></i></a>';
+            $olink = ' <a href="' . $info->link . '" target="_blank"><i class="fas fa-external-link-alt"></i></a>';
         }
         if ($c[$n]['all'] OR !$t) {
-            $c[$n]['content'] .= '<li><a href="/' . $dir . $target . ' >' . $icon . $f . '</a>' . $olink . '</li> ';
+            $c[$n]['content'] .= '<li class="list-group-item"><a href="/' . $dir . $target . ' >' . $icon . $f . '</a>' . $olink . '</li> ';
         }
     }
-
 }
 
 function RemoveDirectory($p)

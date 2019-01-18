@@ -1,10 +1,13 @@
 <?xml version='1.0' standalone='yes'?>
 <info>
+    <!-- Pastas -->
     <name>Name</name>
     <link>https://www.google.pt</link>
     <hide>1</hide>
+    <!-- Root -->
     <add>
         <name>Name</name>
         <link>http://www.example.com</link>
+        <hide>1</hide>
     </add>
 </info>

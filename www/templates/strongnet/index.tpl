@@ -2,44 +2,47 @@
 <html lang="{{c.l.c1}}">
 <head>
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{c.l.title}}</title>
     <link rel="icon" href="/{{c.dirs.template}}favicon.ico">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/css/uikit.min.css"/>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/{{c.dirs.composer}}twbs/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="/{{c.dirs.template}}css/main.css"/>
 </head>
 <body>
-<div class="uk-container uk-container-center uk-margin-top uk-margin-bottom uk-border-rounded">
-    <div class="header uk-clearfix">
-        <ul class="uk-float-right uk-list lang">
-            <li><a href="?l=en-US"><img src="/{{c.dirs.images}}flags/en-US.png" alt="en-US.png" title="{{c.l.enUS}}"
-                                        width="16"/></a></li>
-            <li><a href="?l=pt-PT"><img src="/{{c.dirs.images}}flags/pt-PT.png" alt="pt-PT.png" title="{{c.l.ptPT}}"
-                                        width="16"/></a></li>
+<div class="container my-3 rounded">
+    <div class="header clearfix">
+        <ul class="lang float-right list-inline">
+            <li class="list-inline-item"><a href="?l=en-US"><img src="/{{c.dirs.images}}flags/en-US.png" alt="en-US.png"
+                                                                 title="{{c.l.enUS}}"
+                                                                 width="16"/></a></li>
+            <li class="list-inline-item"><a href="?l=pt-PT"><img src="/{{c.dirs.images}}flags/pt-PT.png" alt="pt-PT.png"
+                                                                 title="{{c.l.ptPT}}"
+                                                                 width="16"/></a></li>
         </ul>
-        <a href="/" class="uk-float-left"><img src="/{{c.dirs.template}}images/logo.png" alt="logo.png"/></a>
+        <a href="/" class="float-left"><img src="/{{c.dirs.template}}images/logo.png" alt="logo.png"/></a>
     </div>
     <hr>
-    <div class="uk-grid " data-uk-grid-margin="">
-        <div class="uk-width-small-1-2 uk-width-medium-1-4">
-            <div class="uk-panel uk-panel-box">
-                <h3 class="uk-panel-title">
-                    <i class="uk-icon-wrench uk-icon-small"></i> {{c.l.tools}} {{c.tools.collapse|raw}}
-                </h3>
-                <ul class="uk-list">
-                    <li><a href="/?phpinfo=1" target="_blank"> <i class="uk-icon-wrench"></i> PHP Info</a></li>
-                    <li><a href="/phpmyadmin/" target="_blank"> <i class="uk-icon-wrench"></i> PHPMyAdmin</a></li>
+    <div class="content row justify-content-around">
+        <div class="col-6 col-md-3">
+            <div class="main-card card">
+                <h5 class="card-title"><i class="fas fa-wrench"></i> {{c.l.tools}} {{c.tools.collapse|raw}}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="/?phpinfo=1" target="_blank"><i class="fas fa-wrench"></i> PHP
+                            Info</a></li>
+                    <li class="list-group-item"><a href="/phpmyadmin/" target="_blank"><i class="fas fa-wrench"></i>
+                            PHPMyAdmin</a></li>
                     {{c.tools.content|raw}}
                 </ul>
             </div>
         </div>
-        <div class="uk-width-small-1-2 uk-width-medium-1-4">
-            <div class="uk-panel uk-panel-box">
-                <h3 class="uk-panel-title">
-                    <i class="uk-icon-star uk-icon-small"></i> {{c.l.projects}} {{c.projects.collapse|raw}}
-                </h3>
-                <ul class="uk-list">
+        <div class="col-6 col-md-3">
+            <div class="main-card card">
+                <h5 class="card-title"><i class="fas fa-star"></i> {{c.l.projects}} {{c.projects.collapse|raw}}</h5>
+                <ul class="list-group list-group-flush">
                     {% if c.projects.content is empty %}
                     {{c.l.noProjects|raw}}
                     {% else %}
@@ -48,12 +51,11 @@
                 </ul>
             </div>
         </div>
-        <div class="uk-width-small-1-2 uk-width-medium-1-4">
-            <div class="uk-panel uk-panel-box">
-                <h3 class="uk-panel-title">
-                    <i class="uk-icon-warning uk-icon-small"></i> {{c.l.tests}} {{c.tests.collapse|raw}}
-                </h3>
-                <ul class="uk-list">
+        <div class="col-6 col-md-3">
+            <div class="main-card card">
+                <h5 class="card-title"><i
+                            class="fas fa-exclamation-triangle"></i> {{c.l.tests}} {{c.tests.collapse|raw}}</h5>
+                <ul class="list-group list-group-flush">
                     {% if c.tests.content is empty %}
                     {{c.l.noTests|raw}}
                     {% else %}
@@ -62,30 +64,28 @@
                 </ul>
             </div>
         </div>
-        <div class="uk-width-small-1-2 uk-width-medium-1-4">
-            <div class="uk-panel uk-panel-box">
-                <h3 class="uk-panel-title">
-                    <i class="uk-icon-link uk-icon-small"></i> {{c.l.links}} {{c.links.collapse|raw}}
-                </h3>
-                <ul class="uk-list">
-                    <li><a href="{{c.companyLink}}" target="_blank"> <i class="uk-icon-link"></i> {{c.company}}</a></li>
+        <div class="col-6 col-md-3">
+            <div class="main-card card">
+                <h5 class="card-title"><i class="fas fa-link"></i> {{c.l.links}} {{c.links.collapse|raw}}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="{{c.companyLink}}" target="_blank"><i
+                                    class="fas fa-link"></i> {{c.company}}</a></li>
                     {{c.links.content|raw}}
                 </ul>
             </div>
         </div>
     </div>
     <hr>
-    <div class="footer uk-clearfix">
-        <ul class="uk-float-right uk-list links">
-            <li><a href="{{c.companyLink}}" target="_blank">{{c.company}}</a></li>
+    <div class="footer clearfix">
+        <ul class="links float-right list-inline">
+            <li class="list-inline-item"><a href="{{c.companyLink}}" target="_blank">{{c.company}}</a></li>
         </ul>
-        <div class="uk-float-left">&copy; {{c.company}} {{c.year}}</div>
+        <div class="float-left">&copy; {{c.company}} {{c.year}}</div>
     </div>
 </div>
 <!-- jQuery  -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"
-        integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-<!-- Bootstrap's core JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.4/js/uikit.min.js"></script>
+<script src="/{{c.dirs.composer}}components/jquery/jquery.min.js"></script>
+<!-- Bootstrap  -->
+<script src="/{{c.dirs.composer}}twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
