@@ -25,7 +25,7 @@ function GetContent(&$c, $n)
     $c[$n]['content'] = '';
 
     $dir = '';
-    $a = $c['dir'];
+    $a = $c['dirUrl'];
     $a[0] = '_' . $n;
 
     $icon = '';
@@ -68,13 +68,13 @@ function GetContent(&$c, $n)
 function GetLang(&$c, $l = '')
 {
     if (empty($l)) $l = $c['languagegDefault'];
-    if (isset($_GET['l']) && file_exists($c['dirs']['language'] . $_GET['l'] . '.php')) {
+    if (isset($_GET['l']) && file_exists($c['dir']['language'] . $_GET['l'] . '.php')) {
         setcookie('iweb-l', $_GET['l'], time() + 3600);
         $l = $_GET['l'];
     } elseif (isset($_COOKIE['iweb-l'])) {
         $l = $_COOKIE['iweb-l'];
     }
-    return ($c['dirs']['language'] . $l . '.php');
+    return ($c['dir']['language'] . $l . '.php');
 }
 
 function getNameHide(&$c, $n, $d, $f, $icon)

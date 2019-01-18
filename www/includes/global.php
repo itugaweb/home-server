@@ -1,22 +1,23 @@
 <?php
-require_once($c['dirs']['includes'] . 'functions.php');
+require_once($c['dir']['includes'] . 'functions.php');
 
 // Select Language
 require_once(GetLang($c));
 
-$c['dirs']['template'] = sprintf($c['dirs']['template'], $c['template']);
+$c['dir']['template'] = sprintf($c['dir']['template'], $c['template']);
+$c['url']['template'] = sprintf($c['url']['template'], $c['template']);
 
-if ($c['debug']) RemoveDirectory(__DIR__ . '/' . $c['dirs']['twigCache']);
+if ($c['debug']) RemoveDirectory(__DIR__ . '/' . $c['dir']['twigCache']);
 
-$c['dir'] = array();
+$c['dirUrl'] = array();
 foreach (explode('/', $_SERVER['REQUEST_URI']) as $v) {
     if (trim($v) <> '') {
         $v = urldecode($v);
-        $s = trim(implode('/', $c['dir']));
+        $s = trim(implode('/', $c['dirUrl']));
         if (strlen($s) > 0) $s .= '/';
         $s .= $v;
         if (is_dir($s))
-            $c['dir'][] .= $v;
+            $c['dirUrl'][] .= $v;
     }
 }
 

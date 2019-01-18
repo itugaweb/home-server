@@ -8,12 +8,12 @@ require_once('configdefault.php');
 if (file_exists('config.php'))
     require_once('config.php');
 
-require_once $c['dirs']['composer'] . 'autoload.php';
-require_once($c['dirs']['includes'] . 'global.php');
+require_once($c['dir']['composer'] . 'autoload.php');
+require_once($c['dir']['includes'] . 'global.php');
 
-$l = new Twig_Loader_Filesystem($c['dirs']['template']);
+$l = new Twig_Loader_Filesystem($c['dir']['template']);
 $t = new Twig_Environment($l, array(
-    'cache' => $c['dirs']['twigCache'],
+    'cache' => $c['dir']['twigCache'],
     'debug' => $c['debug']
 ));
 
