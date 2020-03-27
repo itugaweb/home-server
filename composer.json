@@ -1,0 +1,11 @@
+{
+  "config": {
+    "vendor-dir": "www/libraries/composer"
+  },
+  "require": {
+    "twig/twig": "^2.0",
+    "twbs/bootstrap": "^4.0",
+    "components/jquery": "^3.0",
+    "phpmailer/phpmailer": "^6.0"
+  }
+}

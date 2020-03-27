@@ -2,9 +2,8 @@
 function formatPath($params, $fromRoot = true)
 {
     static $root = null;
-    if ($root === null) {
-        $root = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-    }
+    if ($root === null)
+        $root = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR;
 
     if (!is_array($params))
         $params = array($params);
@@ -28,8 +27,9 @@ function formatUrl($params, $fromRoot = true)
     static $rootUrl = null;
     if ($rootUrl === null) {
         $rootUrl = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
-        $rootUrl .= (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != '80' ? ':' . $_SERVER['SERVER_PORT'] : '') . '/';
-        $rootUrl .= basename(dirname($_SERVER['PHP_SELF'])) != '' ? basename(dirname($_SERVER['PHP_SELF'])) . '/' : '';
+        $rootUrl .= (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80' && $_SERVER['SERVER_PORT'] != '443') ? ':' . $_SERVER['SERVER_PORT'] : '') . '/';
+        $base = dirname($_SERVER['PHP_SELF']);
+		$rootUrl .= ($base != '' && $base != '\\') ? ltrim($base, '/') . '/' : '';
     }
 
     if (!is_array($params))
@@ -48,10 +48,13 @@ function formatUrl($params, $fromRoot = true)
     return $out;
 }
 
+$c['mainPage'] = 'home';
+
 $c['company'] = 'CompanyName';
 $c['companyLink'] = 'http://www.company.com';
 $c['debug'] = false;
 $c['dir']['root'] = formatPath('');
+$c['dir']['components'] = formatPath('components');
 $c['dir']['images'] = formatPath('images');
 $c['dir']['includes'] = formatPath('includes');
 $c['dir']['language'] = formatPath('language');
