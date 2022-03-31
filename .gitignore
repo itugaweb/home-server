@@ -2,7 +2,7 @@
 www/_projects/*
 www/_tests/*
 www/_tools/*
+www/files/*
 www/tmp/*
 www/libraries/composer/*
-www/composer.lock
 www/config.php
