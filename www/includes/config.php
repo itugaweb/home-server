@@ -27,9 +27,16 @@ function formatUrl($params, $fromRoot = true)
     static $rootUrl = null;
     if ($rootUrl === null) {
         $rootUrl = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
-        $rootUrl .= (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80' && $_SERVER['SERVER_PORT'] != '443') ? ':' . $_SERVER['SERVER_PORT'] : '') . '/';
+
+        $length = strlen($_SERVER['SERVER_PORT']);
+        if (substr_compare($rootUrl, $_SERVER['SERVER_PORT'], -$length) === 0) {
+            $rootUrl .= '/';
+        } else {
+            $rootUrl .= (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] != '80' && $_SERVER['SERVER_PORT'] != '443') ? ':' . $_SERVER['SERVER_PORT'] : '') . '/';
+        }
+
         $base = dirname($_SERVER['PHP_SELF']);
-		$rootUrl .= ($base != '' && $base != '\\') ? ltrim($base, '/') . '/' : '';
+        $rootUrl .= ($base != '' && $base != '\\') ? ltrim($base, '/') . '/' : '';
     }
 
     if (!is_array($params))
